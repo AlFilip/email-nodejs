@@ -11,8 +11,8 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 const user = process.env.SMTP_LOGIN
-const pass = process.env.envSMTP_PASS
-const recipient = process.env.envSMTP_TO
+const pass = process.env.env.SMTP_PASS
+const recipient = process.env.env.SMTP_TO
 
 
 let transporter = nodemailer.createTransport({
