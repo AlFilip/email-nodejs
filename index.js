@@ -9,7 +9,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 // parse application/json
 app.use(bodyParser.json())
 
-const port = process.env.PORT || 3010
 const user = process.env.SMTP_LOGIN
 const pass = process.env.SMTP_PASS
 const recipient = process.env.SMTP_TO
@@ -24,10 +23,6 @@ let transporter = nodemailer.createTransport({
         pass, // generated ethereal password
     },
 });
-
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
 
 app.post('/send', async function (req, res) {
     try {
@@ -48,8 +43,4 @@ app.post('/send', async function (req, res) {
     } catch (e) {
         res.send(e)
     }
-})
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
 })
