@@ -10,13 +10,18 @@ app.use(bodyParser.urlencoded({extended: false}))
 // parse application/json
 app.use(bodyParser.json())
 
+const user = process.env.SMTP_LOGIN
+const pass = process.env.envSMTP_PASS
+const recipient = process.env.envSMTP_TO
+
+
 let transporter = nodemailer.createTransport({
     service: "gmail",
     // port: 587,
     // secure: false, // true for 465, false for other ports
     auth: {
-        user: 't9371100211@gmail.com', // generated ethereal user
-        pass: 'plwmmpnbachaioof', // generated ethereal password
+        user, // generated ethereal user
+        pass, // generated ethereal password
     },
 });
 
@@ -29,7 +34,7 @@ app.post('/send', async function (req, res) {
         const {name, contacts, message} = req.body
         const info = await transporter.sendMail({
             from: '"My Portfolio 👻"', // sender address
-            to: "t9371100211@gmail.com", // list of receivers
+            to: recipient, // list of receivers
             subject: "Message from portfolio", // Subject line
             text: 'req.body.message', // plain text body
             html: ` <div>
