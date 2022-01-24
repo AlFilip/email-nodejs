@@ -5,14 +5,14 @@ const bodyParser = require('body-parser')
 
 const app = express()
 app.use(cors())
-const port = 3010
 app.use(bodyParser.urlencoded({extended: false}))
 // parse application/json
 app.use(bodyParser.json())
 
+const port = process.env.PORT || 3010
 const user = process.env.SMTP_LOGIN
-const pass = process.env.env.SMTP_PASS
-const recipient = process.env.env.SMTP_TO
+const pass = process.env.SMTP_PASS
+const recipient = process.env.SMTP_TO
 
 
 let transporter = nodemailer.createTransport({
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 app.post('/send', async function (req, res) {
     try {
         const {name, contacts, message} = req.body
-        const info = await transporter.sendMail({
+        await transporter.sendMail({
             from: '"My Portfolio 👻"', // sender address
             to: recipient, // list of receivers
             subject: "Message from portfolio", // Subject line
